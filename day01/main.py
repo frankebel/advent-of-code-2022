@@ -1,3 +1,4 @@
+# https://adventofcode.com/2022/day/1
 with open("day01/input.txt", "r") as f:
     calories = [sum([int(food) for food in elf.split("\n")])
                 for elf in f.read().strip().split("\n\n")]

@@ -1,3 +1,4 @@
+# https://adventofcode.com/2022/day/3
 import string
 
 data = open("input.txt", "r").read().strip().split()

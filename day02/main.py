@@ -1,3 +1,4 @@
+# https://adventofcode.com/2022/day/2
 with open("input.txt", "r") as f:
     data = f.read().strip().split("\n")
 
