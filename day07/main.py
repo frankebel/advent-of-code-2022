@@ -22,22 +22,15 @@ class Directory:
 
     def size(self):
         size = 0
-        if len(self.children) != 0:
-            for child in self.children.values():
-                if type(child) == Directory:
-                    size += child.size()
-                else:
-                    size += child.size
+        for child in self.children.values():
+            size += child.size() if type(child) == Directory else child.size
         return size
 
     def tree(self):
         res = [str(self)]
-        if len(self.children) != 0:
-            for child in self.children.values():
-                if type(child) == Directory:
-                    res.extend([child.tree()])
-                else:
-                    res.extend([str(child)])
+        for child in self.children.values():
+            res.extend([child.tree()]) if type(child) == Directory \
+                else res.extend([str(child)])
         return res
 
 
@@ -59,12 +52,13 @@ class FileSystem:
 
     def cd(self, dir: str):
         """Change directory."""
-        if dir == "/":
-            self.working_dir = self.root
-        elif dir == "..":
-            self.working_dir = self.working_dir.parent
-        else:
-            self.working_dir = self.working_dir.children[dir]
+        match dir:
+            case "/":
+                self.working_dir = self.root
+            case "..":
+                self.working_dir = self.working_dir.parent
+            case _:
+                self.working_dir = self.working_dir.children[dir]
 
 
 def part1(dir: Directory, threshold: int = 0):
@@ -88,13 +82,9 @@ data = open("input.txt", "r").read().strip().split("\n")
 
 fs = FileSystem(name="fs")
 for line in data:
-    # print(line.split())
     match line.split():
         case ["$", "cd", dir]:
-            if dir == "/":
-                pass
-            else:
-                fs.cd(dir)
+            fs.cd(dir)
         case ["$", "ls"]:
             pass
         case ["dir", dir]:
