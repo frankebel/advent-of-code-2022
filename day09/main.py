@@ -2,9 +2,9 @@
 
 data = open("input.txt", "r").read().strip().split("\n")
 
-head = complex(0, 0)
-tail = complex(0, 0)
-visited = {complex(tail)}
+n_knots = 10
+rope = [complex(0, 0) for _ in range(n_knots)]
+visited = [set([knot]) for knot in rope]
 direction = {"R": 1, "L": -1, "U": 1j, "D": -1j}
 
 for motion in data:
@@ -12,21 +12,25 @@ for motion in data:
     n_steps = int(n_steps)
 
     for _ in range(n_steps):
-        head += direction[dir]
-        dist = head - tail
-        if abs(dist) >= 2:
-            if dist.real > 0:
-                tail += 1
-            elif dist.real < 0:
-                tail -= 1
-            if dist.imag > 0:
-                tail += 1j
-            elif dist.imag < 0:
-                tail -= 1j
-            visited.add(tail)
+        for i, knot in enumerate(rope):
+            if i == 0:
+                # Update head knot.
+                rope[0] += direction[dir]
+            else:
+                # Update all other knots.
+                dist = rope[i-1] - knot  # Distance to previous knot.
+                if abs(dist) >= 2:
+                    if dist.real > 0:
+                        rope[i] += 1
+                    elif dist.real < 0:
+                        rope[i] -= 1
+                    if dist.imag > 0:
+                        rope[i] += 1j
+                    elif dist.imag < 0:
+                        rope[i] -= 1j
+                    visited[i].add(rope[i])
 
-
-p1 = len(visited)
-p2 = 0
+p1 = len(visited[1])
+p2 = len(visited[-1])
 print("Solution Part 1:", p1)
 print("Solution Part 2:", p2)
