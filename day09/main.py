@@ -9,9 +9,7 @@ direction = {"R": 1, "L": -1, "U": 1j, "D": -1j}
 
 for motion in data:
     dir, n_steps = motion.split()
-    n_steps = int(n_steps)
-
-    for _ in range(n_steps):
+    for _ in range(int(n_steps)):
         for i, knot in enumerate(rope):
             if i == 0:
                 # Update head knot.
@@ -20,14 +18,8 @@ for motion in data:
                 # Update all other knots.
                 dist = rope[i-1] - knot  # Distance to previous knot.
                 if abs(dist) >= 2:
-                    if dist.real > 0:
-                        rope[i] += 1
-                    elif dist.real < 0:
-                        rope[i] -= 1
-                    if dist.imag > 0:
-                        rope[i] += 1j
-                    elif dist.imag < 0:
-                        rope[i] -= 1j
+                    rope[i] += complex((dist.real > 0) - (dist.real < 0),
+                                       (dist.imag > 0) - (dist.imag < 0))
                     visited[i].add(rope[i])
 
 p1 = len(visited[1])
