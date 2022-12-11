@@ -1,13 +1,10 @@
 # https://adventofcode.com/2022/day/7
 
 class Directory:
-    def __init__(self, name: str, children: dict = dict(), **kwargs):
+    def __init__(self, name: str, children: dict = dict(), parent=None):
         self.name = name
         self.children = children
-        try:
-            self.parent = kwargs['parent']
-        except KeyError:
-            pass
+        self.parent: Directory = parent if parent else self
 
     def __repr__(self):
         return f"{self.name}"
