@@ -17,12 +17,9 @@ def alpha_to_int(grid: np.ndarray,
     temp[start] = "a"
     temp[end] = "z"
     # Map ASCII characters to number
-    if reverse:
-        res = [[string.ascii_lowercase[::-1].index(element) for element in row]
-               for row in temp]
-    else:
-        res = [[string.ascii_lowercase.index(element) for element in row]
-               for row in temp]
+    s = string.ascii_lowercase
+    s = s[::-1] if reverse else s
+    res = [[s.index(element) for element in row] for row in temp]
     res = np.array(res, dtype=np.int32)
     return res
 
@@ -96,15 +93,13 @@ for i, row in enumerate(data):
 assert start
 assert end
 
-# Create grid with numeric representation.
-grid = alpha_to_int(data, start, end)
-
 # Part 1
-p1 = BFS(grid, start, end)
+grid1 = alpha_to_int(data, start, end)
+p1 = BFS(grid1, start, end)
 print("Solution Part 1:", p1)
 
 # Part 2
 goal = string.ascii_lowercase[::-1].index("a")
-grid = alpha_to_int(data, start, end, reverse=True)
-p2 = BFS(grid, end, goal)
+grid2 = alpha_to_int(data, start, end, reverse=True)
+p2 = BFS(grid2, end, goal)
 print("Solution Part 2:", p2)
