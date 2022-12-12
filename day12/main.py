@@ -6,20 +6,30 @@ import numpy as np
 import string
 
 
-def alpha_to_int(grid, start, end):
+def alpha_to_int(grid: np.ndarray,
+                 start: tuple,
+                 end: tuple,
+                 reverse: bool = False) -> np.ndarray:
+    """Create grid with numeric representation."""
+
     # Map ("S", "E") to ("a", "z")
     temp = copy.deepcopy(grid)
     temp[start] = "a"
     temp[end] = "z"
     # Map ASCII characters to number
-    # TODO ord(elment) and remove string import
-    res = [[string.ascii_letters.index(element) for element in row]
-           for row in temp]
+    if reverse:
+        res = [[string.ascii_lowercase[::-1].index(element) for element in row]
+               for row in temp]
+    else:
+        res = [[string.ascii_lowercase.index(element) for element in row]
+               for row in temp]
     res = np.array(res, dtype=np.int32)
     return res
 
 
-def BFS(grid, start, end):
+def BFS(grid: np.ndarray, start: tuple, end: int | tuple) -> int:
+    """Breadth first_search on grid from start to end."""
+
     # Deque holds nodes in the form (y, x, steps)
     Q = deque()
     Q.append((*start, 0))
@@ -30,10 +40,14 @@ def BFS(grid, start, end):
         y, x, steps = Q.popleft()
 
         # Return steps if "end" is visited
-        if (y, x) == end:
-            return steps
+        if isinstance(end, tuple):
+            if (y, x) == end:
+                return steps
+        else:
+            if grid[y, x] == end:
+                return steps
 
-        # Else rais steps by 1
+        # Else raise steps by 1
         steps += 1
         # Create list of neighbouring nodes.
         next_node = []
@@ -88,5 +102,9 @@ grid = alpha_to_int(data, start, end)
 # Part 1
 p1 = BFS(grid, start, end)
 print("Solution Part 1:", p1)
+
 # Part 2
-print("Solution Part 2:", 0)
+goal = string.ascii_lowercase[::-1].index("a")
+grid = alpha_to_int(data, start, end, reverse=True)
+p2 = BFS(grid, end, goal)
+print("Solution Part 2:", p2)
