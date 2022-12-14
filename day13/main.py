@@ -5,17 +5,15 @@ from json import loads
 from math import prod
 
 
-# TODO type
-# def comparison(left: int | list, right: int | list) -> int:
-def comparison(left, right) -> int:
+def comparison(left: int | list, right: int | list) -> int:
     match left, right:
-        case int(), int():
+        case int(left), int(right):
             return left - right
         case int(), list():
             return comparison([left], right)
         case list(), int():
             return comparison(left, [right])
-        case list(), list():
+        case list(left), list(right):
             for i, j in zip(left, right):
                 if (res := comparison(i, j)) != 0:
                     return res
