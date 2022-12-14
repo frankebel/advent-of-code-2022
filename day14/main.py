@@ -1,6 +1,7 @@
 # https://adventofcode.com/2022/day/14
 
 from collections import defaultdict
+from copy import deepcopy
 
 
 def grid_edges(grid):
@@ -19,7 +20,7 @@ def print_grid(grid):
         print()
 
 
-def part1(grid):
+def fill_sand(grid):
     x_min, x_max, _, _ = grid_edges(grid)
 
     units = 0  # Number of sand units.
@@ -51,16 +52,17 @@ def part1(grid):
         # Fill location with sand particle.
         grid[s] = "o"
         units += 1
+        # Return if source is blocked.
+        if s == source:
+            return units
 
 
 source = (500, 0)
-
 data = [[tuple(map(int, coordinate.split(","))) for coordinate
          in wall.split(" -> ")]
         for wall in
         open("input.txt", "r").readlines()]
 
-# print(x_min, x_max, y_min, y_max)
 
 # Create grid.
 grid = defaultdict(lambda: ".")
@@ -87,9 +89,16 @@ for wall in data:
 
 
 # Part 1
-p1 = part1(grid)
+grid1 = deepcopy(grid)
+p1 = fill_sand(grid1)
 print("Solution Part 1:", p1)
 
+
 # Part 2
-p2 = 0
+grid2 = deepcopy(grid)
+# Create "inifinite" floor two levels below.
+_, _, _, y_max = grid_edges(grid2)
+for x in range(500 - y_max - 10, 500 + y_max + 10):  # Margin of 10 units.
+    grid2[(x, y_max+2)] = "#"
+p2 = fill_sand(grid2)
 print("Solution Part 2:", p2)
