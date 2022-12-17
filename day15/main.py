@@ -28,5 +28,24 @@ print("Solution Part 1:", len(p1))
 
 
 # Part 2
-p2 = 0
+p2_constant = 4_000_000
+
+s = z3.Solver()
+x, y = z3.Ints("x y")
+s.add(x >= 0, x <= 4_000_000)
+s.add(y >= 0, y <= 4_000_000)
+
+
+def z3_abs(x):
+    return z3.If(x >= 0, x, -x)
+
+
+for sx, sy, bx, by in data:
+    d = abs(sx - bx) + abs(sy - by)  # Manhatten distance
+    # Add constraint that point (x, y) must have bigger distance.
+    s.add(z3_abs(x - sx) + z3_abs(y - sy) > d)
+
+assert s.check() == z3.sat
+model = s.model()
+p2 = model[x].as_long()*p2_constant + model[y].as_long()
 print("Solution Part 2:", p2)
