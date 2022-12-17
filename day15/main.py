@@ -1,6 +1,7 @@
 # https://adventofcode.com/2022/day/15
 
 import re
+import z3
 
 data = [tuple(map(int, re.findall(r"-?\d+", observation)))
         for observation in
@@ -17,12 +18,12 @@ for sx, sy, bx, by in data:
     if (row_dist := abs(sy - row)) <= d:
         # Add all x coordinates to p1.
         x = set(range(sx-(d-row_dist), sx+(d-row_dist)+1))
-        p1 = p1.union(x)
+        p1 |= x
 
 # Remove beacons in row.
 for bx, by in beacons:
     if by == row:
-        p1.remove(bx)
+        p1.discard(bx)
 
 print("Solution Part 1:", len(p1))
 
