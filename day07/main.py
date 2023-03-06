@@ -1,5 +1,6 @@
 # https://adventofcode.com/2022/day/7
 
+
 class Directory:
     def __init__(self, name: str, children: dict = dict(), parent=None):
         self.name = name
@@ -26,8 +27,9 @@ class Directory:
     def tree(self):
         res = [str(self)]
         for child in self.children.values():
-            res.extend([child.tree()]) if type(child) == Directory \
-                else res.extend([str(child)])
+            res.extend([child.tree()]) if type(child) == Directory else res.extend(
+                [str(child)]
+            )
         return res
 
 

@@ -18,10 +18,12 @@ for i, row in enumerate(data):
             p1 += 1
             continue
         # Compare to left, right, up, down.
-        if element > max(row[:j]) \
-                or element > max(row[j+1:]) \
-                or element > max(data[:i, j]) \
-                or element > max(data[i+1:, j]):
+        if (
+            element > max(row[:j])
+            or element > max(row[j + 1 :])
+            or element > max(data[:i, j])
+            or element > max(data[i + 1 :, j])
+        ):
             p1 += 1
 
 # Part 2
@@ -44,7 +46,7 @@ for i, row in enumerate(data):
                 break
         # Look right.
         right = 0
-        for tree in row[j+1:]:
+        for tree in row[j + 1 :]:
             if tree < element:
                 right += 1
             else:
@@ -60,14 +62,14 @@ for i, row in enumerate(data):
                 break
         # Look down.
         down = 0
-        for tree in data[i+1:, j]:
+        for tree in data[i + 1 :, j]:
             if tree < element:
                 down += 1
             else:
                 down += 1
                 break
         # Update score.
-        scenic_score = left*right*up*down
+        scenic_score = left * right * up * down
         p2 = max(p2, scenic_score)
 
 print("Solution Part 1:", p1)

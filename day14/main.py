@@ -13,9 +13,9 @@ def grid_edges(grid):
 
 def print_grid(grid):
     x_min, x_max, _, y_max = grid_edges(grid)
-    for y in range(0, y_max+1):
+    for y in range(0, y_max + 1):
         print(f"{y:3}", end="")
-        for x in range(x_min, x_max+1):
+        for x in range(x_min, x_max + 1):
             print(grid[(x, y)], end="")
         print()
 
@@ -58,10 +58,10 @@ def fill_sand(grid):
 
 
 source = (500, 0)
-data = [[tuple(map(int, coordinate.split(","))) for coordinate
-         in wall.split(" -> ")]
-        for wall in
-        open("input.txt", "r").readlines()]
+data = [
+    [tuple(map(int, coordinate.split(","))) for coordinate in wall.split(" -> ")]
+    for wall in open("input.txt", "r").readlines()
+]
 
 
 # Create grid.
@@ -72,17 +72,17 @@ for wall in data:
     for (ax, ay), (bx, by) in zip(wall, wall[1:]):
         if ax == bx:
             if by > ay:
-                for y in range(ay, by+1):
+                for y in range(ay, by + 1):
                     grid[(ax, y)] = "#"
             else:
-                for y in range(ay, by-1, -1):
+                for y in range(ay, by - 1, -1):
                     grid[(ax, y)] = "#"
         elif ay == by:
             if bx > ax:
-                for x in range(ax, bx+1):
+                for x in range(ax, bx + 1):
                     grid[(x, ay)] = "#"
             else:
-                for x in range(ax, bx-1, -1):
+                for x in range(ax, bx - 1, -1):
                     grid[(x, ay)] = "#"
         else:
             Exception("Wall not grid alined")
@@ -99,6 +99,6 @@ grid2 = deepcopy(grid)
 # Create "inifinite" floor two levels below.
 _, _, _, y_max = grid_edges(grid2)
 for x in range(500 - y_max - 10, 500 + y_max + 10):  # Margin of 10 units.
-    grid2[(x, y_max+2)] = "#"
+    grid2[(x, y_max + 2)] = "#"
 p2 = fill_sand(grid2)
 print("Solution Part 2:", p2)

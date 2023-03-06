@@ -4,9 +4,9 @@ import textwrap
 
 
 def update(cycle, raster, width_CRT, signal_strengths):
-    raster += "#" if abs((cycle % width_CRT)-X) <= 1 else "."
+    raster += "#" if abs((cycle % width_CRT) - X) <= 1 else "."
     cycle += 1
-    signal_strengths.append(cycle*X)
+    signal_strengths.append(cycle * X)
     return cycle, raster
 
 
@@ -14,7 +14,7 @@ cycle = 0
 X = 1  # Register
 width_CRT = 40
 signal_strengths = []
-raster = ''
+raster = ""
 
 data = open("input.txt", "r").read().strip().split("\n")
 

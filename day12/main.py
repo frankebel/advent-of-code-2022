@@ -6,10 +6,9 @@ import numpy as np
 import string
 
 
-def alpha_to_int(grid: np.ndarray,
-                 start: tuple,
-                 end: tuple,
-                 reverse: bool = False) -> np.ndarray:
+def alpha_to_int(
+    grid: np.ndarray, start: tuple, end: tuple, reverse: bool = False
+) -> np.ndarray:
     """Create grid with numeric representation."""
 
     # Map ("S", "E") to ("a", "z")
@@ -50,22 +49,22 @@ def BFS(grid: np.ndarray, start: tuple, end: int | tuple) -> int:
         next_node = []
         # Left
         if x > 0:
-            if grid[y, x-1] - grid[y, x] <= 1:
-                next_node.append((y, x-1))
+            if grid[y, x - 1] - grid[y, x] <= 1:
+                next_node.append((y, x - 1))
         # Right
         try:
-            if grid[y, x+1] - grid[y, x] <= 1:
-                next_node.append((y, x+1))
+            if grid[y, x + 1] - grid[y, x] <= 1:
+                next_node.append((y, x + 1))
         except IndexError:
             pass
         # Up
         if y > 0:
-            if grid[y-1, x] - grid[y, x] <= 1:
-                next_node.append((y-1, x))
+            if grid[y - 1, x] - grid[y, x] <= 1:
+                next_node.append((y - 1, x))
         # Down
         try:
-            if grid[y+1, x] - grid[y, x] <= 1:
-                next_node.append((y+1, x))
+            if grid[y + 1, x] - grid[y, x] <= 1:
+                next_node.append((y + 1, x))
         except IndexError:
             pass
 
@@ -78,8 +77,7 @@ def BFS(grid: np.ndarray, start: tuple, end: int | tuple) -> int:
     raise Exception("No path found")
 
 
-data = [list(row) for row in
-        open("input.txt", "r").read().strip().split("\n")]
+data = [list(row) for row in open("input.txt", "r").read().strip().split("\n")]
 data = np.array(data, dtype=np.dtype("U1"))
 
 # Get coordinates for start, end

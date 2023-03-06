@@ -50,11 +50,11 @@ for monkey in data:
     operation = lines[2].split("= ")[-1].split()
     match operation:
         case "old", "*", "old":
-            m["operation"] = lambda x: x*x
+            m["operation"] = lambda x: x * x
         case "old", "*", n:
-            m["operation"] = lambda x, n=int(n): x*n
+            m["operation"] = lambda x, n=int(n): x * n
         case "old", "+", n:
-            m["operation"] = lambda x, n=int(n): x+n
+            m["operation"] = lambda x, n=int(n): x + n
     # Divisibility test
     divisibility = re.search(r"\d+", lines[3])
     if divisibility:

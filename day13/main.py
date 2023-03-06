@@ -22,9 +22,11 @@ def comparison(left: int | list, right: int | list) -> int:
     raise Exception(f"Could not compare {left} to {right}")
 
 
-data = [loads(packet) for packet in
-        open("input.txt", "r").read().strip().split("\n")
-        if packet != ""]
+data = [
+    loads(packet)
+    for packet in open("input.txt", "r").read().strip().split("\n")
+    if packet != ""
+]
 
 # Part 1
 p1 = 0

@@ -3,9 +3,10 @@
 import re
 import z3
 
-data = [tuple(map(int, re.findall(r"-?\d+", observation)))
-        for observation in
-        open("input.txt", "r").read().strip().split("\n")]
+data = [
+    tuple(map(int, re.findall(r"-?\d+", observation)))
+    for observation in open("input.txt", "r").read().strip().split("\n")
+]
 
 # Part 1
 row = 2_000_000
@@ -17,7 +18,7 @@ for sx, sy, bx, by in data:
     # Check if area overlaps given row.
     if (row_dist := abs(sy - row)) <= d:
         # Add all x coordinates to p1.
-        x = set(range(sx-(d-row_dist), sx+(d-row_dist)+1))
+        x = set(range(sx - (d - row_dist), sx + (d - row_dist) + 1))
         p1 |= x
 
 # Remove beacons in row.
@@ -48,5 +49,5 @@ for sx, sy, bx, by in data:
 
 assert s.check() == z3.sat
 model = s.model()
-p2 = model[x].as_long()*p2_constant + model[y].as_long()
+p2 = model[x].as_long() * p2_constant + model[y].as_long()
 print("Solution Part 2:", p2)

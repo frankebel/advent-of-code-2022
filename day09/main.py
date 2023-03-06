@@ -16,10 +16,12 @@ for motion in data:
                 rope[0] += direction[dir]
             else:
                 # Update all other knots.
-                dist = rope[i-1] - knot  # Distance to previous knot.
+                dist = rope[i - 1] - knot  # Distance to previous knot.
                 if abs(dist) >= 2:
-                    rope[i] += complex((dist.real > 0) - (dist.real < 0),
-                                       (dist.imag > 0) - (dist.imag < 0))
+                    rope[i] += complex(
+                        (dist.real > 0) - (dist.real < 0),
+                        (dist.imag > 0) - (dist.imag < 0),
+                    )
                     visited[i].add(rope[i])
 
 p1 = len(visited[1])

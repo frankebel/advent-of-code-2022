@@ -5,12 +5,14 @@ import copy
 data = open("input.txt", "r").read().strip().split("\n")
 
 # Split at empty line
-stack_text, moves_text = data[:data.index("")], data[data.index("") + 1:]
+stack_text, moves_text = data[: data.index("")], data[data.index("") + 1 :]
 
 # Create stacks
 stack_text = stack_text[::-1]
-stacks = [[crate for row in stack_text[1:] if (crate := row[4*i+1]) != " "]
-          for i in range(int(len(stack_text[0].split())))]
+stacks = [
+    [crate for row in stack_text[1:] if (crate := row[4 * i + 1]) != " "]
+    for i in range(int(len(stack_text[0].split())))
+]
 # Add dummy to set starting index to 1
 stacks.insert(0, [""])
 
